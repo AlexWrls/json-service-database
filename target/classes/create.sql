@@ -2,17 +2,17 @@ drop database if exists serviceDB;
 create database serviceDB with  owner = postgres encoding = 'UTF8';
 alter database serviceDB owner to postgres;
 
-drop table if exists public.product;
+drop table if exists public.product cascade;
 create table if not exists public.product
 (
     id bigint not null ,
-    productName character varying(100) not null ,
+    name character varying(100) not null ,
     price integer not null ,
     primary key (id)
 );
 alter table public.product owner to postgres;
 
-drop table if exists public.buyer;
+drop table if exists public.buyer cascade ;
 create table if not exists public.buyer
 (
     id bigint not null ,
@@ -22,7 +22,7 @@ create table if not exists public.buyer
 );
 alter table public.buyer owner to postgres;
 
-drop table if exists public.purchase;
+drop table if exists public.purchase cascade ;
 create table if not exists public.purchase
 (
     id bigint not null ,
@@ -35,4 +35,3 @@ create table if not exists public.purchase
     constraint buyer_fk foreign key (buyer_id) references buyer(id)
         on delete cascade on update cascade
 );
-

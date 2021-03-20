@@ -1,12 +1,11 @@
 import lombok.Getter;
 import org.apache.commons.cli.*;
 
-
 import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class Arg {
+public class Argument {
     private static final String PATH = System.getProperty("user.dir")+"/src/main/resources/";
     private final Logger log = Logger.getGlobal();
 
@@ -17,11 +16,11 @@ public class Arg {
     @Getter
     private File inputFile;                  // имя входных файлов
 
-    private Arg(){};
-    private static Arg arguments;
-    public static Arg getArguments(String... args){
+    private Argument(){};
+    private static Argument arguments;
+    public static Argument getArguments(String... args){
         if (arguments == null){
-            arguments = new Arg();
+            arguments = new Argument();
             arguments.parse(args);
         }
         return arguments;
@@ -38,7 +37,7 @@ public class Arg {
         System.exit(status);
     }
 
-   private void parse(String[] args) {
+    private void parse(String[] args) {
         Options options = new Options();
         options.addOption("search", false, "• поиск покупателей по критериям (search);");
         options.addOption("stat", false, "• статистика за период (stat);");

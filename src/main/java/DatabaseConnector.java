@@ -3,19 +3,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
-    static Connection conn1 = null;
-    public static Connection getDbConnection(String driver, String url,String username, String password) {
-//         TODO Auto-generated constructor stub
-        try {
-            Class.forName(driver);
-            conn1 = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException e) {
-//           TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SQLException e) {
-//             TODO Auto-generated catch block
-            e.printStackTrace();
+
+    private static Connection connection;
+
+    public static Connection getDbConnection(String driver, String url, String username, String password) {
+        if (connection == null){
+            try {
+                Class.forName(driver);
+                connection = DriverManager.getConnection(url, username, password);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return conn1;
+        return connection;
     }
 }

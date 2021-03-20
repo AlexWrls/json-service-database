@@ -1,52 +1,42 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-
-
+import java.util.List;
 
 public class DBJsonConverter {
 
-    static ArrayList<String> data = new ArrayList<String>();
-    static Connection conn = null;
-    static PreparedStatement ps = null;
-    static ResultSet rs = null;
-    static String path = "";
-    static String driver="";
-    static String url="";
-    static String username="";
-    static String password="";
-    static String query="";
+    private static final String driver = "org.postgresql.Driver";
+    private static final String url = "jdbc:postgresql://localhost:5432/serviceDB";
+    private static final String username = "postgres";
+    private static final String password = "root";
 
-    @SuppressWarnings({ "unchecked" })
-    public static void dataLoad(String path) {
-        JSONObject obj1 = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        conn = DatabaseConnector.getDbConnection(driver, url, username, password);
+    public void  writeJson (File path, String query){
+        List<String> data = new ArrayList<>();
+        try (Connection connection = DatabaseConnector.getDbConnection(driver, url, username, password);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query); ) {
 
-        try {
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            ArrayList<String> columnNames = new ArrayList<String>();
-            if (rs != null) {
-                ResultSetMetaData columns = rs.getMetaData();
+            JSONObject obj1 = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+           List<String> columnNames = new ArrayList<>();
+
+            if (resultSet != null) {
+                ResultSetMetaData columns = resultSet.getMetaData();
                 int i = 0;
                 while (i < columns.getColumnCount()) {
                     i++;
                     columnNames.add(columns.getColumnName(i));
                 }
-                while (rs.next()) {
+                while (resultSet.next()) {
                     JSONObject obj = new JSONObject();
                     for (i = 0; i < columnNames.size(); i++) {
-                        data.add(rs.getString(columnNames.get(i)));
+                        data.add(resultSet.getString(columnNames.get(i)));
                         {
                             for (int j = 0; j < data.size(); j++) {
                                 if (data.get(j) != null) {
@@ -65,30 +55,19 @@ public class DBJsonConverter {
                     file.flush();
                     file.close();
                 }
-                ps.close();
+
             } else {
                 JSONObject obj2 = new JSONObject();
                 obj2.put(null, (Collection<?>) null);
                 jsonArray.add(obj2);
                 obj1.put("results", jsonArray);
             }
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                    rs.close();
-                    ps.close();
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
         }
     }
+
 }
