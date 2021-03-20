@@ -1,10 +1,12 @@
+import lombok.NoArgsConstructor;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
 
-    private static Connection connection;
+    private static Connection connection = null;
 
     public static Connection getDbConnection(String driver, String url, String username, String password) {
         if (connection == null){

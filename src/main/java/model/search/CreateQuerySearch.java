@@ -1,9 +1,11 @@
+package model.search;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CreateQuery {
-    Argument argument = Argument.getArguments();
+public class CreateQuerySearch {
 
     public  Map<Object,String> createQuery(List<Object> criterias) {
 

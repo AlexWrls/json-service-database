@@ -1,23 +1,25 @@
+package model.search;
+
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ParseCriterias {
+public class ParseCriteriaSearch {
 
 
-    public Criterias parse(File path){
+    public CriteriaSearch parse(File path){
 
         Gson gson = new Gson();
-        Criterias criterias = null;
+        CriteriaSearch criteriaSearch = null;
         try (
             FileReader reader = new FileReader(path);) {
-            criterias = gson.fromJson(reader,Criterias.class);
+            criteriaSearch = gson.fromJson(reader, CriteriaSearch.class);
         } catch (
                 IOException e) {
             e.printStackTrace();
         }
-        return criterias;
+        return criteriaSearch;
     }
 }

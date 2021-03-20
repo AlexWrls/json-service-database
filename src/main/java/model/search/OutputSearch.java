@@ -1,4 +1,4 @@
-package search;
+package model.search;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,13 +10,13 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-public class OutputObject {
+public class OutputSearch {
     @Getter @Setter
      private Object type;
     @Getter
-    private List<ElementResult> result = new ArrayList<>();
+    private List<ElementSearch> result = new ArrayList<>();
 
-    public void addElement(ElementResult elementResult){
-        result.add(elementResult);
+    public void addElement(ElementSearch elementSearch){
+        result.add(elementSearch);
     }
 }
