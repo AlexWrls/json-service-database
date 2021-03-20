@@ -1,4 +1,8 @@
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import model.search.ElementResult;
+import model.search.OutputObject;
+import model.search.Search;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,8 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class JsonConverter {
     private static final String driver = "org.postgresql.Driver";
@@ -16,20 +19,38 @@ public class JsonConverter {
     private static final String username = "postgres";
     private static final String password = "root";
 
-    public void  writeJson (File path, String query){
-        List<String> data = new ArrayList<>();
+    Argument argument = Argument.getArguments();
+
+    public void  writeJson (File path, Map<Object,String> queryMap){
+
         try (Connection connection = DatabaseConnector.getDbConnection(driver, url, username, password);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
              FileWriter writer = new FileWriter(path); ) {
 
-            while (resultSet.next()){
-
+            OutputObject outputObject = new OutputObject();
+            if (argument.isSearch()){
+                outputObject.setType("search");
+            } else {
+                outputObject.setType("stat");
             }
 
+            for (Map.Entry<Object,String> map : queryMap.entrySet()){
+                ResultSet resultSet = statement.executeQuery(map.getValue());
+                ElementResult elementResult = new ElementResult();
+                elementResult.setCriteria(map.getKey());
 
-            Gson gson = new Gson();
-            gson.newJsonWriter(writer);
+                while (resultSet.next()){
+                    String firstName = resultSet.getString("first_name");
+                    String lastName = resultSet.getString("last_name");
+                    elementResult.addResult(new Search(firstName,lastName));
+                }
+                outputObject.addElement(elementResult);
+                resultSet.close();
+            }
+
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            writer.write(gson.toJson(outputObject));
 
 
         } catch (SQLException throwables) {

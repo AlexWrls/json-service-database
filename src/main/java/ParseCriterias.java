@@ -13,7 +13,7 @@ public class ParseCriterias {
         Criterias criterias = null;
         try (
             FileReader reader = new FileReader(path);) {
-            criterias = gson.fromJson(reader, Criterias.class);
+            criterias = gson.fromJson(reader,Criterias.class);
         } catch (
                 IOException e) {
             e.printStackTrace();

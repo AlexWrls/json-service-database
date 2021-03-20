@@ -1,5 +1,6 @@
 
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -13,11 +14,12 @@ public class Main {
 
         // create query for database
         CreateQuery createQuery = new CreateQuery();
-        String query = createQuery.createQuery(criterias);
+        Map<Object,String> queryMap = createQuery.createQuery(criterias);
 
         // converter to json
-        DBJsonConverter dbJsonConverter = new DBJsonConverter();
-        dbJsonConverter.writeJson(argument.getOutFile(),query);
+        JsonConverter jsonConverter = new JsonConverter();
+        jsonConverter.writeJson(argument.getOutFile(),queryMap);
+
 
     }
 }
