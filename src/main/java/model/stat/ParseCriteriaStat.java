@@ -8,17 +8,16 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-
 public class ParseCriteriaStat {
 
 
-    public CriteriaStat parse(File path){
+    public CriteriaStat parse(File path) {
 
         Gson gson = new Gson();
         CriteriaStat criteriaStat = null;
         try (
                 FileReader reader = new FileReader(path);) {
-                criteriaStat = gson.fromJson(reader, CriteriaStat.class);
+            criteriaStat = gson.fromJson(reader, CriteriaStat.class);
         } catch (
                 IOException e) {
             e.printStackTrace();

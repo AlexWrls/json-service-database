@@ -5,6 +5,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class Search {
-    String firstName;
-    String lastName;
+   private final String firstName;
+   private final String lastName;
 }

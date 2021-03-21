@@ -5,7 +5,7 @@ import lombok.Getter;
 
 public class CriteriaStat {
     @Getter
-   private String startDate;
+    private String startDate;
     @Getter
-   private String endDate;
+    private String endDate;
 }

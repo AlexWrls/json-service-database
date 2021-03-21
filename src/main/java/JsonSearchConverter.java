@@ -29,7 +29,6 @@ public class JsonSearchConverter {
             OutputSearch outputSearch = new OutputSearch();
             outputSearch.setType("search");
 
-
             for (Map.Entry<Object,String> map : queryMap.entrySet()){
                 ResultSet resultSet = statement.executeQuery(map.getValue());
                 ElementSearch elementSearch = new ElementSearch();

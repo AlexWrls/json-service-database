@@ -14,12 +14,13 @@ public class OutputStat {
     @Getter
     @Setter
     private Object type;
-    @Getter @Setter
+    @Getter
+    @Setter
     private long totalDays;
     @Getter
     private List<ElementStat> customers = new ArrayList();
 
-    public void addElementStat(ElementStat elementStat){
+    public void addElementStat(ElementStat elementStat) {
         customers.add(elementStat);
     }
 }
