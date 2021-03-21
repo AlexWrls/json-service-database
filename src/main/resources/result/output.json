@@ -1,1 +1,1 @@
-{"results":[{"last_name":"Иванов","first_name":"Иван"},{"last_name":"Иванов","first_name":"Петр"}]}{"results":[{"last_name":"Иванов","first_name":"Иван"}]}{"results":[{"last_name":"Иванов","first_name":"Иван"},{"last_name":"Иванов","first_name":"Петр"}]}
+{"type":"error","message":"Неправильный формат даты Text \u00272021-03-2\u0027 could not be parsed at index 8"}
