@@ -2,6 +2,7 @@ package service;
 
 import service.converter.JsonConverter;
 import service.converter.JsonConverterImpl;
+import service.exception.ExceptionJson;
 import service.options.search.CreateQuerySearch;
 import service.options.search.ParseCriteriaSearch;
 import service.options.stat.CreateQueryStat;
@@ -19,7 +20,7 @@ public class Main {
         Argument argument = Argument.getArguments(args);
 
         Map<Object,String> queryMap = new HashMap<>();
-//        try {
+        try {
             if (argument.isSearch()){
                 // get object criterias
                 ParseCriteriaSearch parseCriteriaSearch = new ParseCriteriaSearch();
@@ -40,9 +41,9 @@ public class Main {
             JsonConverter jsonConverter = new JsonConverterImpl();
             jsonConverter.writeJson(argument.getOutFile(),queryMap);
 
-//        }catch (Exception e){
-//            throw new ExceptionJson("error",e.getMessage());
-//        }
+        }catch (Exception e){
+            throw new ExceptionJson("error",String.format("Ошибка работы программы (%s)",e.getMessage()));
+        }
 
     }
 }

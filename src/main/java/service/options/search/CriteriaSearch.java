@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CriteriaSearch {
 
-    private List<Object> criterias = new ArrayList<>();
+    private final List<Object> criterias = new ArrayList<>();
 
     public List<Object> getCriteria() {
         return criterias;

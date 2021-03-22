@@ -15,7 +15,7 @@ public class ElementSearch {
     private Object criteria;
 
     @Getter
-   private List<Search> result = new ArrayList<>();
+   private final List<Search> result = new ArrayList<>();
 
     public void addResult(Search search){
         result.add(search);

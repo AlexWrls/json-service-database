@@ -51,10 +51,10 @@ public class JsonConverterImpl implements JsonConverter {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ExceptionJson("error",throwables.getMessage());
+            throw new ExceptionJson("error",String.format("Ошибка запроса к БД (%s)",throwables.getMessage()));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new ExceptionJson("error", e.getMessage());
+            throw new ExceptionJson("error",String.format("Ошибка записи данных (%s)",e.getMessage()));
         }
     }
 

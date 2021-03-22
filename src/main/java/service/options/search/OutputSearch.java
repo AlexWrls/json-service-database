@@ -14,7 +14,7 @@ public class OutputSearch {
     @Getter @Setter
      private Object type;
     @Getter
-    private List<ElementSearch> result = new ArrayList<>();
+    private final List<ElementSearch> result = new ArrayList<>();
 
     public void addElement(ElementSearch elementSearch){
         result.add(elementSearch);

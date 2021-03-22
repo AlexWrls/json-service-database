@@ -2,6 +2,7 @@ package service;
 
 import lombok.Getter;
 import org.apache.commons.cli.*;
+import service.exception.ExceptionJson;
 
 import java.io.File;
 import java.util.List;
@@ -85,6 +86,13 @@ public class Argument {
 
             inputFile = new File(PATH + "source/" + files.get(0));
             outFile = new File(PATH + "result/" + files.get(1));
+
+            if (!inputFile.isFile()){
+                throw new ExceptionJson("error",String.format("Входной файл не является файлом (%s)",inputFile.getAbsolutePath()));
+            }
+            if (!outFile.isFile()){
+                throw new ExceptionJson("error",String.format("Выходной файл не является файлом (%s)",outFile.getAbsolutePath()));
+            }
 
             log.info("Входной файл:\n"+ inputFile);
             log.info("Выходной файл:\n"+ outFile);

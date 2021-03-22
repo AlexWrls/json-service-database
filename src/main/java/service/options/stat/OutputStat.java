@@ -18,7 +18,7 @@ public class OutputStat {
     @Setter
     private long totalDays;
     @Getter
-    private List<ElementStat> customers = new ArrayList<>();
+    private final List<ElementStat> customers = new ArrayList<>();
 
     public void addElementStat(ElementStat elementStat) {
         customers.add(elementStat);

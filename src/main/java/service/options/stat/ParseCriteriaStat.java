@@ -20,10 +20,10 @@ public class ParseCriteriaStat  {
             criteriaStat = gson.fromJson(reader, CriteriaStat.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new ExceptionJson("error",e.getMessage());
+            throw new ExceptionJson("error",String.format("Файл не найден (%s)",e.getMessage()));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new ExceptionJson("error",e.getMessage());
+            throw new ExceptionJson("error",String.format("Ошибка чтения данных (%s)",e.getMessage()));
         }
         return criteriaStat;
     }

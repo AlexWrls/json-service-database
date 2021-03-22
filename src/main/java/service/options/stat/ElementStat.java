@@ -16,7 +16,7 @@ public class ElementStat {
     private String name;
 
     @Getter
-    private List<Stat> purchases = new ArrayList<>();
+    private final List<Stat> purchases = new ArrayList<>();
 
     @Getter
     @Setter
