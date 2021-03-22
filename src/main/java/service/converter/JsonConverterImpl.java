@@ -5,22 +5,23 @@ import com.google.gson.GsonBuilder;
 import service.Argument;
 import service.DatabaseConnector;
 import service.exception.ExceptionJson;
-import service.criteria.search.ElementSearch;
-import service.criteria.search.OutputSearch;
-import service.criteria.search.Search;
-import service.criteria.stat.ElementStat;
-import service.criteria.stat.OutputStat;
-import service.criteria.stat.Stat;
+import service.options.search.ElementSearch;
+import service.options.search.OutputSearch;
+import service.options.search.Search;
+import service.options.stat.ElementStat;
+import service.options.stat.OutputStat;
+import service.options.stat.Stat;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class JsonConverterImpl implements JsonConverter {
 
@@ -39,12 +40,12 @@ public class JsonConverterImpl implements JsonConverter {
             if (argument.isSearch()){
                 OutputSearch outputSearch = outputSearch(queryMap,statement);
                 GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
+                Gson gson = builder.setPrettyPrinting().create();
                 writer.write(gson.toJson(outputSearch));
             }else {
                 OutputStat outputStat = outputStat(queryMap,statement);
                 GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.create();
+                Gson gson = builder.setPrettyPrinting().create();
                 writer.write(gson.toJson(outputStat));
             }
 
@@ -99,9 +100,9 @@ public class JsonConverterImpl implements JsonConverter {
                 String fullName = firstName + " " + lastName;
 
                 if (stackElement.isEmpty()) {
-                    stackElement.push(new ElementStat());
-                    ElementStat elementStat = stackElement.peek();
-                    elementStat.setName(fullName);
+                        stackElement.push(new ElementStat());
+                        ElementStat elementStat = stackElement.peek();
+                        elementStat.setName(fullName);
                 }
 
                 if (!fullName.equals(stackElement.peek().getName())) {
@@ -120,7 +121,23 @@ public class JsonConverterImpl implements JsonConverter {
             }
             resultSet.close();
         }
+        long sum  = outputStat.getCustomers().stream().mapToLong(ElementStat::getTotalExpenses).sum();
+        double avg = (double) sum/ outputStat.getCustomers().size();
+
+        outputStat.setTotalExpenses(sum);
+        outputStat.setAvgExpenses(new BigDecimal(avg).setScale(2, RoundingMode.UP).doubleValue());
+        outputStat.getCustomers().sort(new SumComporator());
+
         return outputStat;
     }
-
+}
+class SumComporator implements Comparator<ElementStat>{
+    @Override
+    public int compare(ElementStat o1, ElementStat o2) {
+        if (o1.getTotalExpenses() < o2.getTotalExpenses()){
+            return 1;
+        }else {
+            return -1;
+        }
+    }
 }

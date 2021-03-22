@@ -2,12 +2,11 @@ package service;
 
 import service.converter.JsonConverter;
 import service.converter.JsonConverterImpl;
-import service.criteria.search.CreateQuerySearch;
-import service.criteria.search.ParseCriteriaSearch;
-import service.criteria.stat.CreateQueryStat;
-import service.criteria.stat.CriteriaStat;
-import service.criteria.stat.ParseCriteriaStat;
-import service.exception.ExceptionJson;
+import service.options.search.CreateQuerySearch;
+import service.options.search.ParseCriteriaSearch;
+import service.options.stat.CreateQueryStat;
+import service.options.stat.CriteriaStat;
+import service.options.stat.ParseCriteriaStat;
 
 import java.util.HashMap;
 import java.util.List;

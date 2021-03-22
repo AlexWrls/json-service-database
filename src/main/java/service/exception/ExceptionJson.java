@@ -21,10 +21,10 @@ public class ExceptionJson extends RuntimeException {
             jsonObject.addProperty("type",type);
             jsonObject.addProperty("message",message);
             GsonBuilder builder = new GsonBuilder();
-            Gson gson = builder.create();
+            Gson gson = builder.setPrettyPrinting().create();
             writer.write(gson.toJson(jsonObject));
         } catch (IOException e) {
-            log.warning(String.format("Ошибка записи в файл %s ,уведомления об ошибке %s",argument.getOutFile(),e.getMessage()));
+            log.warning(String.format("Ошибка %s записи в файл %s",e.getMessage(),argument.getOutFile()));
             e.printStackTrace();
         }
     }

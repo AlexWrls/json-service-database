@@ -31,7 +31,7 @@ public class Argument {
     private static void showParamOptions(Options options) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("java -jar program.jar ","Параметры программы задаются при запуске через аргументы командной строки, по порядку:",options ,
-                "input.json • имя входного файла, обязательное;\noutput.json • имя выходного файла;");
+                "inputSearch.json • имя входного файла, обязательное;\noutput.json • имя выходного файла;");
 
     }
     private static void printOption(Options options, int status){
@@ -73,7 +73,7 @@ public class Argument {
             List<String> files = cmd.getArgList();
 
             if (files.size() < 1) {
-                log.warning("Отсутствуют остальные параметры: имя входного файла; (пример: input.json)");
+                log.warning("Отсутствуют остальные параметры: имя входного файла; (пример: inputSearch.json)");
                 printOption(options, 7);
             }
             if (files.size() < 2) {
