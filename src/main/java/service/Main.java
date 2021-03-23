@@ -19,7 +19,7 @@ public class Main {
         // parse argument
         Argument argument = Argument.getArguments(args);
 
-        Map<Object,String> queryMap = new HashMap<>();
+        Map<Object,String> queryMap;
         try {
             if (argument.isSearch()){
                 // get object criterias

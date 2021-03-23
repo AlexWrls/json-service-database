@@ -8,6 +8,12 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Элемент статистики содежит:
+ * 1. name - фамилия и имя покупателя
+ * 2. purchases - список статистик всех уникальных товаров, купленных покупателем за этот период, упорядоченных по суммарной стоимости по убыванию
+ * 2. totalExpenses - общая стоимость покупок этого покупателя за период
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 public class ElementStat {

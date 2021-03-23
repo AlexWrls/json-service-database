@@ -23,6 +23,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+/**
+ * Конвертирование в json и запись в выходящий файл
+ */
+
 public class JsonConverterImpl implements JsonConverter {
 
     private static final String driver = "org.postgresql.Driver";
@@ -126,12 +130,16 @@ public class JsonConverterImpl implements JsonConverter {
 
         outputStat.setTotalExpenses(sum);
         outputStat.setAvgExpenses(new BigDecimal(avg).setScale(2, RoundingMode.UP).doubleValue());
-        outputStat.getCustomers().sort(new SumComporator());
+        outputStat.getCustomers().sort(new SumComparator());
 
         return outputStat;
     }
 }
-class SumComporator implements Comparator<ElementStat>{
+/**
+ * Сортировка стасистики по сумме покупок товаров
+ */
+
+class SumComparator implements Comparator<ElementStat>{
     @Override
     public int compare(ElementStat o1, ElementStat o2) {
         if (o1.getTotalExpenses() < o2.getTotalExpenses()){

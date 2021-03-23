@@ -8,6 +8,10 @@ import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * Парсер аргументов командной строки
+ */
+
 public class Argument {
     private static final String PATH = System.getProperty("user.dir")+"/src/main/resources/";
     private final Logger log = Logger.getGlobal();
@@ -94,8 +98,8 @@ public class Argument {
                 throw new ExceptionJson("error",String.format("Выходной файл не является файлом (%s)",outFile.getAbsolutePath()));
             }
 
-            log.info("Входной файл:\n"+ inputFile);
-            log.info("Выходной файл:\n"+ outFile);
+            log.info("Входной файл: "+ inputFile);
+            log.info("Выходной файл: "+ outFile);
             log.info(isSearch?"Задан поиск покупателей по критериям":"Задан поиск статистики за период");
 
         }

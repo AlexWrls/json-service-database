@@ -8,7 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-
+/**
+ * Формирование списка критериев для поиска статистики за период по входному файлу
+ */
 public class ParseCriteriaStat  {
 
     public CriteriaStat parse(File path) {

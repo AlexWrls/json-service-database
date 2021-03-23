@@ -1,7 +1,11 @@
 package service.options.search;
 
 import lombok.AllArgsConstructor;
-
+/**
+ * Класс для формирования поиска
+ * 1. firstName - имя покупателя
+ * 2. lastName - фамилия покупателя
+ */
 
 @AllArgsConstructor
 public class Search {

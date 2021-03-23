@@ -1,4 +1,54 @@
 {
-  "type": "error",
-  "message": "Ошибка работы программы (null)"
+  "type": "stat",
+  "totalDays": 3,
+  "customers": [
+    {
+      "name": "Иван Иванов",
+      "purchases": [
+        {
+          "name": "молоко",
+          "expenses": 150
+        },
+        {
+          "name": "масло",
+          "expenses": 70
+        },
+        {
+          "name": "Минеральная вода",
+          "expenses": 45
+        },
+        {
+          "name": "хлеб",
+          "expenses": 35
+        }
+      ],
+      "totalExpenses": 300
+    },
+    {
+      "name": "Анна Кузнецова",
+      "purchases": [
+        {
+          "name": "масло",
+          "expenses": 140
+        },
+        {
+          "name": "сыр",
+          "expenses": 120
+        }
+      ],
+      "totalExpenses": 260
+    },
+    {
+      "name": "Петр Иванов",
+      "purchases": [
+        {
+          "name": "Минеральная вода",
+          "expenses": 90
+        }
+      ],
+      "totalExpenses": 90
+    }
+  ],
+  "totalExpenses": 650,
+  "avgExpenses": 216.67
 }

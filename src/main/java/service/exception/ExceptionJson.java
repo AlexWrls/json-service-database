@@ -9,11 +9,14 @@ import service.Argument;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
+/**
+ * Конвертирование в json и запись в выходящий файл ошибок
+ */
 
 public class ExceptionJson extends RuntimeException {
 
     private final Logger log = Logger.getGlobal();
-    public void printError(String type, String message){
+    private void printError(String type, String message){
 
         Argument argument = Argument.getArguments();
         try ( FileWriter writer = new FileWriter(argument.getOutFile());) {

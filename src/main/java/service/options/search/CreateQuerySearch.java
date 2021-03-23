@@ -5,6 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Формирование запросов для поиска покупателей по списку критериев
+ */
+
 public class CreateQuerySearch {
 
     public Map<Object, String> createQuery(List<Object> criterias) {

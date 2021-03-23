@@ -8,6 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Формирование списка критериев для поиска покупателей по входному файлу
+ */
+
 public class ParseCriteriaSearch {
 
     public CriteriaSearch parse(File path){

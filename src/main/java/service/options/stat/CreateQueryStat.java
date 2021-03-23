@@ -6,6 +6,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * Формирование запросов для поиска статистики по ктирериям
+ */
+
 public class CreateQueryStat {
 
     public Map<Object, String> createQuery(CriteriaStat criteriaStat) {
