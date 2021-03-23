@@ -3,13 +3,12 @@ package service;
 import service.converter.JsonConverter;
 import service.converter.JsonConverterImpl;
 import service.exception.ExceptionJson;
-import service.options.search.CreateQuerySearch;
-import service.options.search.ParseCriteriaSearch;
-import service.options.stat.CreateQueryStat;
-import service.options.stat.CriteriaStat;
-import service.options.stat.ParseCriteriaStat;
+import service.search.controller.CreateQuerySearch;
+import service.search.controller.ParseCriteriaSearch;
+import service.stat.controller.CreateQueryStat;
+import service.stat.dto.CriteriaStat;
+import service.stat.controller.ParseCriteriaStat;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

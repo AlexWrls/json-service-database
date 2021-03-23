@@ -141,7 +141,7 @@
           "purchases": [
             {
               "name": "молоко",
-              "expenses": 150
+              "expenses": 75
             },
             {
               "name": "масло",
@@ -156,21 +156,21 @@
               "expenses": 35
             }
           ],
-          "totalExpenses": 300
+          "totalExpenses": 225
         },
         {
           "name": "Анна Кузнецова",
           "purchases": [
             {
-              "name": "масло",
-              "expenses": 140
-            },
-            {
               "name": "сыр",
               "expenses": 120
+            },
+            {
+              "name": "масло",
+              "expenses": 70
             }
           ],
-          "totalExpenses": 260
+          "totalExpenses": 190
         },
         {
           "name": "Петр Иванов",
@@ -183,8 +183,8 @@
           "totalExpenses": 90
         }
       ],
-      "totalExpenses": 650,
-      "avgExpenses": 216.67
+      "totalExpenses": 505,
+      "avgExpenses": 168.34
     }
     
 #### Error

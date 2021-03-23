@@ -34,6 +34,7 @@ public class ExceptionJson extends RuntimeException {
 
     public ExceptionJson(String type, String message) {
         printError(type, message);
+        System.exit(1);
     }
 
 }

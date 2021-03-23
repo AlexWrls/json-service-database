@@ -5,12 +5,12 @@ import com.google.gson.GsonBuilder;
 import service.Argument;
 import service.DatabaseConnector;
 import service.exception.ExceptionJson;
-import service.options.search.ElementSearch;
-import service.options.search.OutputSearch;
-import service.options.search.Search;
-import service.options.stat.ElementStat;
-import service.options.stat.OutputStat;
-import service.options.stat.Stat;
+import service.search.dto.ElementSearch;
+import service.search.dto.OutputSearch;
+import service.search.dto.Search;
+import service.stat.dto.ElementStat;
+import service.stat.dto.OutputStat;
+import service.stat.dto.Stat;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -90,7 +90,7 @@ public class JsonConverterImpl implements JsonConverter {
 
         for (Map.Entry<Object, String> map : queryMap.entrySet()) {
             ResultSet resultSet = statement.executeQuery(map.getValue());
-            outputStat.setTotalDays((Long) map.getKey());
+            outputStat.setTotalDays((long)map.getKey());
 
             Stack<ElementStat> stackElement = new Stack<>();
 

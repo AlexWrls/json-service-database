@@ -1,54 +1,74 @@
 {
-  "type": "stat",
-  "totalDays": 3,
-  "customers": [
+  "type": "search",
+  "result": [
     {
-      "name": "Иван Иванов",
-      "purchases": [
+      "criteria": {
+        "lastName": "Иванов"
+      },
+      "result": [
         {
-          "name": "молоко",
-          "expenses": 150
+          "firstName": "Иван",
+          "lastName": "Иванов"
         },
         {
-          "name": "масло",
-          "expenses": 70
-        },
-        {
-          "name": "Минеральная вода",
-          "expenses": 45
-        },
-        {
-          "name": "хлеб",
-          "expenses": 35
+          "firstName": "Петр",
+          "lastName": "Иванов"
         }
-      ],
-      "totalExpenses": 300
+      ]
     },
     {
-      "name": "Анна Кузнецова",
-      "purchases": [
+      "criteria": {
+        "lastName": "Кузнецова"
+      },
+      "result": [
         {
-          "name": "масло",
-          "expenses": 140
-        },
-        {
-          "name": "сыр",
-          "expenses": 120
+          "firstName": "Анна",
+          "lastName": "Кузнецова"
         }
-      ],
-      "totalExpenses": 260
+      ]
     },
     {
-      "name": "Петр Иванов",
-      "purchases": [
+      "criteria": {
+        "productName": "Минеральная вода",
+        "minTimes": 2.0
+      },
+      "result": [
         {
-          "name": "Минеральная вода",
-          "expenses": 90
+          "firstName": "Петр",
+          "lastName": "Иванов"
         }
-      ],
-      "totalExpenses": 90
+      ]
+    },
+    {
+      "criteria": {
+        "minExpenses": 112.0,
+        "maxExpenses": 4000.0
+      },
+      "result": [
+        {
+          "firstName": "Анна",
+          "lastName": "Кузнецова"
+        }
+      ]
+    },
+    {
+      "criteria": {
+        "badCustomers": 3.0
+      },
+      "result": [
+        {
+          "firstName": "Анна",
+          "lastName": "Кузнецова"
+        },
+        {
+          "firstName": "Петр",
+          "lastName": "Иванов"
+        },
+        {
+          "firstName": "Иван",
+          "lastName": "Иванов"
+        }
+      ]
     }
-  ],
-  "totalExpenses": 650,
-  "avgExpenses": 216.67
+  ]
 }
