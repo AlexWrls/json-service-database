@@ -28,9 +28,10 @@ public class ElementStat {
     @Setter
     private long totalExpenses;
 
-    public void addSum(long sum){
-        this.totalExpenses = totalExpenses+sum;
+    public void addSum(long sum) {
+        this.totalExpenses = totalExpenses + sum;
     }
+
     public void addStat(Stat stat) {
         purchases.add(stat);
     }

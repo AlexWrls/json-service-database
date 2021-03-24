@@ -21,7 +21,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Stack;
 
 /**
  * Конвертирование в json и запись в выходящий файл
@@ -36,18 +38,18 @@ public class JsonConverterImpl implements JsonConverter {
     Argument argument = Argument.getArguments();
 
     @Override
-    public void  writeJson(File path, Map<Object, String> queryMap){
+    public void writeJson(File path, Map<Object, String> queryMap) {
 
         try (Connection connection = DatabaseConnector.getDbConnection(driver, url, username, password);
              Statement statement = connection.createStatement();
-             FileWriter writer = new FileWriter(path); ) {
-            if (argument.isSearch()){
-                OutputSearch outputSearch = outputSearch(queryMap,statement);
+             FileWriter writer = new FileWriter(path);) {
+            if (argument.isSearch()) {
+                OutputSearch outputSearch = getOutputSearch(queryMap, statement);
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.setPrettyPrinting().create();
                 writer.write(gson.toJson(outputSearch));
-            }else {
-                OutputStat outputStat = outputStat(queryMap,statement);
+            } else {
+                OutputStat outputStat = getOutputStat(queryMap, statement);
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.setPrettyPrinting().create();
                 writer.write(gson.toJson(outputStat));
@@ -55,28 +57,28 @@ public class JsonConverterImpl implements JsonConverter {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            throw new ExceptionJson("error",String.format("Ошибка запроса к БД (%s)",throwables.getMessage()));
+            throw new ExceptionJson("error", String.format("Ошибка запроса к БД (%s)", throwables.getMessage()));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new ExceptionJson("error",String.format("Ошибка записи данных (%s)",e.getMessage()));
+            throw new ExceptionJson("error", String.format("Ошибка записи данных (%s)", e.getMessage()));
         }
     }
 
-    private OutputSearch outputSearch(Map<Object, String> queryMap,Statement statement) throws SQLException {
+    private OutputSearch getOutputSearch(Map<Object, String> queryMap, Statement statement) throws SQLException {
         OutputSearch outputSearch = new OutputSearch();
         outputSearch.setType("search");
 
-        for (Map.Entry<Object,String> map : queryMap.entrySet()){
+        for (Map.Entry<Object, String> map : queryMap.entrySet()) {
             ResultSet resultSet = statement.executeQuery(map.getValue());
             ElementSearch elementSearch = new ElementSearch();
             elementSearch.setCriteria(map.getKey());
 
-            while (true){
+            while (true) {
                 assert resultSet != null;
                 if (!resultSet.next()) break;
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
-                elementSearch.addResult(new Search(firstName,lastName));
+                elementSearch.addResult(new Search(firstName, lastName));
             }
             outputSearch.addElement(elementSearch);
             resultSet.close();
@@ -84,13 +86,13 @@ public class JsonConverterImpl implements JsonConverter {
         return outputSearch;
     }
 
-    private OutputStat outputStat(Map<Object, String> queryMap,Statement statement) throws SQLException {
+    private OutputStat getOutputStat(Map<Object, String> queryMap, Statement statement) throws SQLException {
         OutputStat outputStat = new OutputStat();
         outputStat.setType("stat");
 
         for (Map.Entry<Object, String> map : queryMap.entrySet()) {
             ResultSet resultSet = statement.executeQuery(map.getValue());
-            outputStat.setTotalDays((long)map.getKey());
+            outputStat.setTotalDays((long) map.getKey());
 
             Stack<ElementStat> stackElement = new Stack<>();
 
@@ -104,9 +106,9 @@ public class JsonConverterImpl implements JsonConverter {
                 String fullName = firstName + " " + lastName;
 
                 if (stackElement.isEmpty()) {
-                        stackElement.push(new ElementStat());
-                        ElementStat elementStat = stackElement.peek();
-                        elementStat.setName(fullName);
+                    stackElement.push(new ElementStat());
+                    ElementStat elementStat = stackElement.peek();
+                    elementStat.setName(fullName);
                 }
 
                 if (!fullName.equals(stackElement.peek().getName())) {
@@ -120,13 +122,13 @@ public class JsonConverterImpl implements JsonConverter {
                 stackElement.peek().addSum(sum);
             }
 
-            if (!stackElement.isEmpty()){
+            if (!stackElement.isEmpty()) {
                 outputStat.addElementStat(stackElement.pop());
             }
             resultSet.close();
         }
-        long sum  = outputStat.getCustomers().stream().mapToLong(ElementStat::getTotalExpenses).sum();
-        double avg = (double) sum/ outputStat.getCustomers().size();
+        long sum = outputStat.getCustomers().stream().mapToLong(ElementStat::getTotalExpenses).sum();
+        double avg = (double) sum / outputStat.getCustomers().size();
 
         outputStat.setTotalExpenses(sum);
         outputStat.setAvgExpenses(new BigDecimal(avg).setScale(2, RoundingMode.UP).doubleValue());
@@ -135,17 +137,5 @@ public class JsonConverterImpl implements JsonConverter {
         return outputStat;
     }
 }
-/**
- * Сортировка стасистики по сумме покупок товаров
- */
 
-class SumComparator implements Comparator<ElementStat>{
-    @Override
-    public int compare(ElementStat o1, ElementStat o2) {
-        if (o1.getTotalExpenses() < o2.getTotalExpenses()){
-            return 1;
-        }else {
-            return -1;
-        }
-    }
-}
+

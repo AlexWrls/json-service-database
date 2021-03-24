@@ -17,12 +17,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OutputSearch {
-    @Getter @Setter
-     private String type;
+    @Getter
+    @Setter
+    private String type;
     @Getter
     private final List<ElementSearch> result = new ArrayList<>();
 
-    public void addElement(ElementSearch elementSearch){
+    public void addElement(ElementSearch elementSearch) {
         result.add(elementSearch);
     }
 }

@@ -18,17 +18,6 @@
     },
     {
       "criteria": {
-        "lastName": "Кузнецова"
-      },
-      "result": [
-        {
-          "firstName": "Анна",
-          "lastName": "Кузнецова"
-        }
-      ]
-    },
-    {
-      "criteria": {
         "productName": "Минеральная вода",
         "minTimes": 2.0
       },

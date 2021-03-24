@@ -1,4 +1,6 @@
-package service.search.controller;
+package service.search.repository;
+
+import service.search.dto.CriteriaSearch;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,8 +12,14 @@ import java.util.Map;
 
 public class CreateQuerySearch {
 
-    public Map<Object, String> createQuery(List<Object> criterias) {
+   private final CriteriaSearch criteriaSearch;
+    public CreateQuerySearch(CriteriaSearch criteriaSearch) {
+        this.criteriaSearch = criteriaSearch;
+    }
 
+    public Map<Object, String> createQuery() {
+
+        List<Object> criterias = criteriaSearch.getCriteria();
         Map<Object, String> queryMap = new LinkedHashMap<>();
 
         StringBuilder query = new StringBuilder();

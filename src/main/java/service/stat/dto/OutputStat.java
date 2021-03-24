@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Выходной класс для конвертации в json для писка статистики за период содержит:
  * 1. type - тип результата
@@ -31,8 +32,11 @@ public class OutputStat {
     public void addElementStat(ElementStat elementStat) {
         customers.add(elementStat);
     }
-    @Getter @Setter
+
+    @Getter
+    @Setter
     private long totalExpenses;
-    @Getter @Setter
+    @Getter
+    @Setter
     private double avgExpenses;
 }

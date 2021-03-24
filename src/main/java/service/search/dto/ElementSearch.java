@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Элемент поска содежит:
  * 1. criteria - критерий для поиска
@@ -16,13 +17,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ElementSearch {
-    @Getter @Setter
+    @Getter
+    @Setter
     private Object criteria;
 
     @Getter
-   private final List<Search> result = new ArrayList<>();
+    private final List<Search> result = new ArrayList<>();
 
-    public void addResult(Search search){
+    public void addResult(Search search) {
         result.add(search);
     }
 }

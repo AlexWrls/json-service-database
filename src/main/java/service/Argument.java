@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 
 public class Argument {
-    private static final String PATH = System.getProperty("user.dir")+"/src/main/resources/";
+    private static final String PATH = System.getProperty("user.dir") + "/src/main/resources/";
     private final Logger log = Logger.getGlobal();
 
     @Getter
@@ -23,10 +23,13 @@ public class Argument {
     @Getter
     private File inputFile;                  // имя входных файлов
 
-    private Argument(){};
+    private Argument() {
+    }
+
     private static Argument arguments;
-    public static Argument getArguments(String... args){
-        if (arguments == null){
+
+    public static Argument getArguments(String... args) {
+        if (arguments == null) {
             arguments = new Argument();
             arguments.parse(args);
         }
@@ -35,11 +38,12 @@ public class Argument {
 
     private static void showParamOptions(Options options) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("java -jar program.jar ","Параметры программы задаются при запуске через аргументы командной строки, по порядку:",options ,
+        formatter.printHelp("java -jar program.jar ", "Параметры программы задаются при запуске через аргументы командной строки, по порядку:", options,
                 "inputSearch.json • имя входного файла, обязательное;\noutput.json • имя выходного файла;");
 
     }
-    private static void printOption(Options options, int status){
+
+    private static void printOption(Options options, int status) {
         showParamOptions(options);
         System.exit(status);
     }
@@ -55,7 +59,7 @@ public class Argument {
         try {
             cmd = parser.parse(options, args);
         } catch (UnrecognizedOptionException e) {
-            log.warning(String.format("Неизвестный параметр: %s",e.getOption()));
+            log.warning(String.format("Неизвестный параметр: %s", e.getOption()));
             printOption(options, 1);
         } catch (ParseException e) {
             log.warning(String.format("Сбой разбора параметра аргументов: %s", e.getMessage()));
@@ -91,16 +95,16 @@ public class Argument {
             inputFile = new File(PATH + "source/" + files.get(0));
             outFile = new File(PATH + "result/" + files.get(1));
 
-            if (!inputFile.isFile()){
-                throw new ExceptionJson("error",String.format("Входной файл не является файлом (%s)",inputFile.getAbsolutePath()));
+            if (!inputFile.isFile()) {
+                throw new ExceptionJson("error", String.format("Входной файл не является файлом (%s)", inputFile.getAbsolutePath()));
             }
-            if (!outFile.isFile()){
-                throw new ExceptionJson("error",String.format("Выходной файл не является файлом (%s)",outFile.getAbsolutePath()));
+            if (!outFile.isFile()) {
+                throw new ExceptionJson("error", String.format("Выходной файл не является файлом (%s)", outFile.getAbsolutePath()));
             }
 
-            log.info("Входной файл: "+ inputFile);
-            log.info("Выходной файл: "+ outFile);
-            log.info(isSearch?"Задан поиск покупателей по критериям":"Задан поиск статистики за период");
+            log.info("Входной файл: " + inputFile);
+            log.info("Выходной файл: " + outFile);
+            log.info(isSearch ? "Задан поиск покупателей по критериям" : "Задан поиск статистики за период");
 
         }
     }

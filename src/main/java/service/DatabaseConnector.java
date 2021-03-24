@@ -15,16 +15,16 @@ public class DatabaseConnector {
     private static Connection connection = null;
 
     public static Connection getDbConnection(String driver, String url, String username, String password) {
-        if (connection == null){
+        if (connection == null) {
             try {
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, username, password);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-                throw new ExceptionJson("error","Ошибка загрузки класса подключения к базе БД; "+e.getMessage());
+                throw new ExceptionJson("error", "Ошибка загрузки класса подключения к базе БД; " + e.getMessage());
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new ExceptionJson("error","Ошибка подключения к БД; "+e.getMessage());
+                throw new ExceptionJson("error", "Ошибка подключения к БД; " + e.getMessage());
             }
         }
         return connection;

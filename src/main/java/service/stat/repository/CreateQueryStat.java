@@ -1,6 +1,7 @@
-package service.stat.controller;
+package service.stat.repository;
 
 import service.exception.ExceptionJson;
+import service.search.dto.CriteriaSearch;
 import service.stat.dto.CriteriaStat;
 
 import java.time.DayOfWeek;
@@ -14,7 +15,12 @@ import java.util.*;
 
 public class CreateQueryStat {
 
-    public Map<Object, String> createQuery(CriteriaStat criteriaStat) {
+    private final CriteriaStat criteriaStat;
+    public CreateQueryStat(CriteriaStat criteriaStat) {
+        this.criteriaStat = criteriaStat;
+    }
+
+    public Map<Object, String> createQuery() {
         Map<Object, String> queryMap = new HashMap<>();
         StringBuilder query = new StringBuilder();
 
@@ -25,14 +31,14 @@ public class CreateQueryStat {
                 .append("'").append(criteriaStat.getStartDate()).append("'").append("::date ")
                 .append("AND pu.date < ").append("'").append(criteriaStat.getEndDate()).append("'").append("::date+1 ");
 
-                List<LocalDate> weekends = getWeekendDay(criteriaStat);
-                for (LocalDate weekend:weekends){
-                    query.append("AND pu.date != ").append("'").append(weekend).append("'").append("::date ");
-                }
+        List<LocalDate> weekends = getWeekendDay(criteriaStat);
+        for (LocalDate weekend : weekends) {
+            query.append("AND pu.date != ").append("'").append(weekend).append("'").append("::date ");
+        }
 
-                query.append("GROUP BY b.last_name, b.first_name , p.name ")
+        query.append("GROUP BY b.last_name, b.first_name , p.name ")
                 .append("ORDER BY b.last_name, b.first_name ,sum(p.price) DESC");
-        queryMap.put(getWorkDay(weekends,criteriaStat), String.valueOf(query));
+        queryMap.put(getWorkDay(weekends, criteriaStat), String.valueOf(query));
         return queryMap;
     }
 
@@ -44,11 +50,11 @@ public class CreateQueryStat {
             startDate = LocalDate.parse(criteriaStat.getStartDate());
             endDate = LocalDate.parse(criteriaStat.getEndDate());
 
-        } catch (Exception e){
-            throw new ExceptionJson("error","Неправильный формат даты");
+        } catch (Exception e) {
+            throw new ExceptionJson("error", "Неправильный формат даты");
         }
-        if (startDate.isAfter(endDate)){
-            throw new ExceptionJson("error","Дата окончания поиска должна идти после даты начала");
+        if (startDate.isAfter(endDate)) {
+            throw new ExceptionJson("error", "Дата окончания поиска должна идти после даты начала");
         }
 
         Set<DayOfWeek> weekend = EnumSet.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
@@ -65,10 +71,11 @@ public class CreateQueryStat {
         }
         return weekends;
     }
-    private long getWorkDay(List<LocalDate> weekend,CriteriaStat criteriaStat){
+
+    private long getWorkDay(List<LocalDate> weekend, CriteriaStat criteriaStat) {
         LocalDate startDate = LocalDate.parse(criteriaStat.getStartDate());
         LocalDate endDate = LocalDate.parse(criteriaStat.getEndDate());
         Period between = Period.between(startDate, endDate);
-        return (long) ((between.getDays() +1) - weekend.size());
+        return (long) ((between.getDays() + 1) - weekend.size());
     }
 }

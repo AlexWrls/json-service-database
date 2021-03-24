@@ -3,8 +3,8 @@
 ---
 > **Условия**
 
- - **_Входные параметры_**, аргументы командной строки где указывается тип операции;
- - **_Входной файл_** - набор аргументов в формате json для иззвлечения данных из БД и последующей записи в выходной файл ;
+ - **_Входные параметры_**, аргументы командной строки где указывается тип операции, имя входного и имя выходного файла;
+ - **_Входной файл_** - набор аргументов в формате json для извлечения данных из БД и последующей записи в выходной файл ;
  
 > **Результат**
 
@@ -16,7 +16,7 @@
     
   > **Используемый стек**
    - Язык программирования [_**Java 8**_](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html "_**Java 8**_");
-   - База данных [_**Postgresql**_](https://mvnrepository.com/artifact/org.postgresql/postgresql/42.2.18 "_**Postgresql**_");
+   - База данных [_**Postgresql**_](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads "_**Postgresql**_");
    - Сборщик проекта [_**Maven**_](http://maven.apache.org "_**Maven**_");
    - Разбор аргументов командной осуществлен с использованием библиотеки [_**Apache Commons CLI 1.4**_](https://mvnrepository.com/artifact/commons-cli/commons-cli/1.4 "_**Apache Commons CLI 1.4**_");
    - Конвертация объектов JSON осуществляется с помощью библиотеки [_**Gson » 2.8.6**_](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.6 "_**Gson » 2.8.6**_");
