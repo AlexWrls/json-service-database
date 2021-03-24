@@ -1,6 +1,7 @@
-package service.search.dto;
+package service.factory.search.dto;
 
 import com.google.gson.Gson;
+import service.factory.Criteria;
 import service.exception.ExceptionJson;
 
 import java.io.File;
@@ -14,7 +15,7 @@ import java.util.List;
  * Класс конвертируемый из входного json файла для поиска покупателей по критерияи
  */
 
-public class CriteriaSearch {
+public class CriteriaSearch implements Criteria {
 
     private final List<Object> criterias = new ArrayList<>();
 
@@ -22,7 +23,8 @@ public class CriteriaSearch {
         return criterias;
     }
 
-    public CriteriaSearch parse(File path) {
+    @Override
+    public Criteria parse(File path) {
 
         Gson gson = new Gson();
         CriteriaSearch criteriaSearch = null;

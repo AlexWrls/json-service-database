@@ -1,8 +1,8 @@
-package service.stat.repository;
+package service.factory.stat.repository;
 
+import service.factory.CreateQuery;
 import service.exception.ExceptionJson;
-import service.search.dto.CriteriaSearch;
-import service.stat.dto.CriteriaStat;
+import service.factory.stat.dto.CriteriaStat;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -13,14 +13,16 @@ import java.util.*;
  * Формирование запросов для поиска статистики по ктирериям
  */
 
-public class CreateQueryStat {
+public class CreateQueryStat implements CreateQuery {
 
     private final CriteriaStat criteriaStat;
     public CreateQueryStat(CriteriaStat criteriaStat) {
         this.criteriaStat = criteriaStat;
     }
 
-    public Map<Object, String> createQuery() {
+    @Override
+    public Map<Object, String> createQueryMap() {
+
         Map<Object, String> queryMap = new HashMap<>();
         StringBuilder query = new StringBuilder();
 

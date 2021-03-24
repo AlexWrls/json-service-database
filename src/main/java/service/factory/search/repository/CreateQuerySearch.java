@@ -1,6 +1,7 @@
-package service.search.repository;
+package service.factory.search.repository;
 
-import service.search.dto.CriteriaSearch;
+import service.factory.CreateQuery;
+import service.factory.search.dto.CriteriaSearch;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,16 +11,19 @@ import java.util.Map;
  * Формирование запросов для поиска покупателей по списку критериев
  */
 
-public class CreateQuerySearch {
+public class CreateQuerySearch implements CreateQuery {
+    private final CriteriaSearch criteria;
 
-   private final CriteriaSearch criteriaSearch;
     public CreateQuerySearch(CriteriaSearch criteriaSearch) {
-        this.criteriaSearch = criteriaSearch;
+        this.criteria = criteriaSearch;
     }
 
-    public Map<Object, String> createQuery() {
 
-        List<Object> criterias = criteriaSearch.getCriteria();
+    @Override
+    public Map<Object, String> createQueryMap() {
+
+        List<Object> criterias = criteria.getCriteria();
+
         Map<Object, String> queryMap = new LinkedHashMap<>();
 
         StringBuilder query = new StringBuilder();

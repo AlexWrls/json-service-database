@@ -1,6 +1,6 @@
 package service.converter;
 
-import service.stat.dto.ElementStat;
+import service.factory.stat.dto.ElementStat;
 
 import java.util.Comparator;
 

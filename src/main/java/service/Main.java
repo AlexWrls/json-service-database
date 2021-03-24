@@ -1,44 +1,32 @@
 package service;
 
-import service.converter.JsonConverter;
-import service.converter.JsonConverterImpl;
 import service.exception.ExceptionJson;
-import service.search.dto.CriteriaSearch;
-import service.search.repository.CreateQuerySearch;
-import service.stat.dto.CriteriaStat;
-import service.stat.repository.CreateQueryStat;
+import service.factory.*;
 
 import java.util.Map;
 
 public class Main {
 
-
     public static void main(String[] args) {
-        // parse argument
-        Argument argument = Argument.getArguments(args);
 
-        Map<Object, String> queryMap;
+        Argument argument = Argument.getArguments(args);
 
         try {
             if (argument.isSearch()) {
-                // get object criterias
-                CriteriaSearch criteriaSearch = new CriteriaSearch().parse(argument.getInputFile());
 
-                // create query for database
-                CreateQuerySearch createQuerySearch = new CreateQuerySearch(criteriaSearch);
-                queryMap = createQuerySearch.createQuery();
+                ConverterFactory converterFactory = new ConverterFactorySearch();
+                Criteria criteria = converterFactory.getCriteria(argument.getInputFile());
+                Map<Object, String> queryMap = converterFactory.getCreateQuery(criteria).createQueryMap();
+
+                converterFactory.getJsonConverter().writeJson(argument.getOutFile(),queryMap);
 
             } else {
+                ConverterFactory converterFactory = new ConverterFactoryStat();
+                Criteria criteria = converterFactory.getCriteria(argument.getInputFile());
+                Map<Object, String> queryMap = converterFactory.getCreateQuery(criteria).createQueryMap();
 
-                CriteriaStat criteriaStat = new CriteriaStat().parse(argument.getInputFile());
-
-                CreateQueryStat createQueryStat = new CreateQueryStat(criteriaStat);
-                queryMap = createQueryStat.createQuery();
+                converterFactory.getJsonConverter().writeJson(argument.getOutFile(),queryMap);
             }
-            // converter to json
-            JsonConverter jsonConverter = new JsonConverterImpl();
-            jsonConverter.writeJson(argument.getOutFile(), queryMap);
-
         } catch (Exception e) {
             throw new ExceptionJson("error", String.format("Ошибка работы программы (%s)", e.getMessage()));
         }

@@ -1,4 +1,4 @@
-package service.stat.dto;
+package service.factory.stat.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

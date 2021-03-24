@@ -1,4 +1,4 @@
-package service.search.dto;
+package service.factory.search.dto;
 
 import lombok.AllArgsConstructor;
 

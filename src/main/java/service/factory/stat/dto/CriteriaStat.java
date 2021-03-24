@@ -1,7 +1,8 @@
-package service.stat.dto;
+package service.factory.stat.dto;
 
 import com.google.gson.Gson;
 import lombok.Getter;
+import service.factory.Criteria;
 import service.exception.ExceptionJson;
 
 import java.io.File;
@@ -14,13 +15,14 @@ import java.io.IOException;
  * 1. startDate - дата начала поиска
  * 2. endDate - дата окончания поиска
  */
-public class CriteriaStat {
+public class CriteriaStat implements Criteria {
     @Getter
     private String startDate;
     @Getter
     private String endDate;
 
-    public CriteriaStat parse(File path) {
+    @Override
+    public Criteria parse(File path) {
 
         Gson gson = new Gson();
         CriteriaStat criteriaStat = null;
@@ -35,4 +37,5 @@ public class CriteriaStat {
         }
         return criteriaStat;
     }
+
 }

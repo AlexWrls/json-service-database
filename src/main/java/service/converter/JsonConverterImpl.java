@@ -5,12 +5,13 @@ import com.google.gson.GsonBuilder;
 import service.Argument;
 import service.DatabaseConnector;
 import service.exception.ExceptionJson;
-import service.search.dto.ElementSearch;
-import service.search.dto.OutputSearch;
-import service.search.dto.Search;
-import service.stat.dto.ElementStat;
-import service.stat.dto.OutputStat;
-import service.stat.dto.Stat;
+import service.factory.JsonConverter;
+import service.factory.search.dto.ElementSearch;
+import service.factory.search.dto.OutputSearch;
+import service.factory.search.dto.Search;
+import service.factory.stat.dto.ElementStat;
+import service.factory.stat.dto.OutputStat;
+import service.factory.stat.dto.Stat;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -21,7 +22,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Stack;
 
