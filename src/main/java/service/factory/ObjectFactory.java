@@ -20,36 +20,30 @@ public class ObjectFactory {
             propertiesMap = lines.map(line -> line.split("=")).collect(Collectors.toMap(arr -> arr[0], arr -> arr[1]));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new ExceptionJson("error",String.format("Ошибка чтения из application.properties (%s)",e.getMessage()));
+            throw new ExceptionJson("error", String.format("Ошибка чтения из application.properties (%s)", e.getMessage()));
         }
 
     }
 
     public void convertToJson(Argument argument) {
-        ConverterFactory converterFactory;
-        switch (argument.getCriteriaType()) {
-            case "search": {
-                converterFactory = new ConverterFactorySearch();
-                Criteria criteriaSearch = converterFactory.getCriteria(argument.getInputFile());
-                Map<Object, String> queryMap = converterFactory.getCreateQuery(criteriaSearch).createQueryMap();
-                JsonConverter jsonConverter = converterFactory.getJsonConverter();
-                configure(jsonConverter);
-                jsonConverter.writeJson(argument.getOutFile(), queryMap);
-                break;
-            }
-            case "stat": {
-                converterFactory = new ConverterFactoryStat();
-                Criteria criteriaStat = converterFactory.getCriteria(argument.getInputFile());
-                Map<Object, String> queryMapStat = converterFactory.getCreateQuery(criteriaStat).createQueryMap();
-                JsonConverter jsonConverterStat = converterFactory.getJsonConverter();
-                configure(jsonConverterStat);
-                jsonConverterStat.writeJson(argument.getOutFile(), queryMapStat);
-                break;
-            }
-            default:
-                throw new ExceptionJson("error", "Неизвестный тип операции(search или stat)");
-        }
+        ConverterFactory converterFactory = getConverterFactory(argument.getCriteriaType());
+        Criteria criteria = converterFactory.getCriteria(argument.getInputFile());
+        Map<Object, String> queryMap = converterFactory.getCreateQuery(criteria).createQueryMap();
+        JsonConverter jsonConverter = converterFactory.getJsonConverter();
+        configure(jsonConverter);
+        jsonConverter.writeJson(argument.getOutFile(), queryMap);
 
+    }
+
+    private ConverterFactory getConverterFactory(String type) {
+        switch (type) {
+            case "search":
+                return new ConverterFactorySearch();
+            case "stat":
+                return new ConverterFactoryStat();
+            default:
+                throw new ExceptionJson("error", "Неизвестный тип параметра (search или stat)");
+        }
     }
 
 
@@ -69,7 +63,7 @@ public class ObjectFactory {
                     field.set(t, value);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
-                    throw new ExceptionJson("error",String.format("Недопустимый аргумент, используемый для вызова метода (%s)",e.getMessage()));
+                    throw new ExceptionJson("error", String.format("Недопустимый аргумент, используемый для вызова метода (%s)", e.getMessage()));
                 }
             }
         }
