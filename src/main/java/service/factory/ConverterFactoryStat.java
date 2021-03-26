@@ -16,7 +16,7 @@ public class ConverterFactoryStat implements ConverterFactory {
 
     @Override
     public CreateQuery getCreateQuery(Criteria criteria) {
-        return new CreateQueryStat((CriteriaStat) criteria );
+        return new CreateQueryStat((CriteriaStat) criteria);
     }
 
     @Override

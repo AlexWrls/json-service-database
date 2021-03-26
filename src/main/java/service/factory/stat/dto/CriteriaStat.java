@@ -2,6 +2,7 @@ package service.factory.stat.dto;
 
 import com.google.gson.Gson;
 import lombok.Getter;
+import org.postgresql.largeobject.LargeObjectManager;
 import service.factory.Criteria;
 import service.exception.ExceptionJson;
 
@@ -9,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Класс критериев для поиска стастики за период содежит:

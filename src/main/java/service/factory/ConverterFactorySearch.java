@@ -6,7 +6,7 @@ import service.factory.search.repository.CreateQuerySearch;
 
 import java.io.File;
 
-public class ConverterFactorySearch implements ConverterFactory{
+public class ConverterFactorySearch implements ConverterFactory {
 
 
     @Override

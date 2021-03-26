@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import service.Argument;
 import service.DatabaseConnector;
 import service.exception.ExceptionJson;
+import service.factory.InjectProperty;
 import service.factory.JsonConverter;
 import service.factory.search.dto.ElementSearch;
 import service.factory.search.dto.OutputSearch;
@@ -31,10 +32,15 @@ import java.util.Stack;
 
 public class JsonConverterImpl implements JsonConverter {
 
-    private static final String driver = "org.postgresql.Driver";
-    private static final String url = "jdbc:postgresql://localhost:5432/serviceDB";
-    private static final String username = "postgres";
-    private static final String password = "root";
+
+    @InjectProperty(value = "driver")
+    private static String driver;
+    @InjectProperty(value = "url")
+    private static String url;
+    @InjectProperty(value = "username")
+    private static String username;
+    @InjectProperty(value = "password")
+    private static String password;
     Argument argument = Argument.getArguments();
 
     @Override
@@ -43,7 +49,7 @@ public class JsonConverterImpl implements JsonConverter {
         try (Connection connection = DatabaseConnector.getDbConnection(driver, url, username, password);
              Statement statement = connection.createStatement();
              FileWriter writer = new FileWriter(path);) {
-            if (argument.isSearch()) {
+            if (argument.getCriteriaType().equals("search")) {
                 OutputSearch outputSearch = getOutputSearch(queryMap, statement);
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.setPrettyPrinting().create();
