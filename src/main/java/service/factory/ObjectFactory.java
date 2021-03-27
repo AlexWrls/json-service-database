@@ -11,6 +11,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+/**
+ *  ObjectFactory выполняет следующие функции:
+ *  1. Устанавливает неодходимую фабрику для конвертирования (ConverterFactory), согласно переданным агрументамм
+ *  2. Считывет файл application.properties и конфигурирует необходдимые объекты
+ */
 public class ObjectFactory {
     private Map<String, String> propertiesMap;
 

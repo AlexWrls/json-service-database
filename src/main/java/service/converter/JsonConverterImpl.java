@@ -49,16 +49,22 @@ public class JsonConverterImpl implements JsonConverter {
         try (Connection connection = DatabaseConnector.getDbConnection(driver, url, username, password);
              Statement statement = connection.createStatement();
              FileWriter writer = new FileWriter(path);) {
-            if (argument.getCriteriaType().equals("search")) {
-                OutputSearch outputSearch = getOutputSearch(queryMap, statement);
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.setPrettyPrinting().create();
-                writer.write(gson.toJson(outputSearch));
-            } else {
-                OutputStat outputStat = getOutputStat(queryMap, statement);
-                GsonBuilder builder = new GsonBuilder();
-                Gson gson = builder.setPrettyPrinting().create();
-                writer.write(gson.toJson(outputStat));
+            switch (argument.getCriteriaType()){
+                case "search":{
+                    OutputSearch outputSearch = getOutputSearch(queryMap, statement);
+                    GsonBuilder builder = new GsonBuilder();
+                    Gson gson = builder.setPrettyPrinting().create();
+                    writer.write(gson.toJson(outputSearch));
+                    break;
+                }
+                case "stat":{
+                    OutputStat outputStat = getOutputStat(queryMap, statement);
+                    GsonBuilder builder = new GsonBuilder();
+                    Gson gson = builder.setPrettyPrinting().create();
+                    writer.write(gson.toJson(outputStat));
+                    break;
+                }
+                default: throw new ExceptionJson("error", "Неизвестный тип параметра (search или stat)");
             }
 
         } catch (SQLException throwables) {
