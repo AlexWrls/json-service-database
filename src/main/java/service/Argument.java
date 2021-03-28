@@ -33,6 +33,9 @@ public class Argument {
         }
         return arguments;
     }
+    public void restArgument(){
+        arguments=null;
+    }
 
     private void parse(String[] args) {
         if (args.length < 3) {
@@ -49,11 +52,11 @@ public class Argument {
             throw new ExceptionJson("error", "Ошибка парсинга аргументов конадной строки");
         }
 
-        if (!inputFile.isFile()) {
-            throw new ExceptionJson("error", String.format("Входной файл не является файлом (%s)", inputFile.getAbsolutePath()));
+        if (!inputFile.isFile() || !inputFile.getName().endsWith(".json")) {
+            throw new ExceptionJson("error", String.format("Входной файл не является файлом json (%s)", inputFile.getAbsolutePath()));
         }
         if (!outFile.isFile()) {
-            throw new ExceptionJson("error", String.format("Выходной файл не является файлом (%s)", outFile.getAbsolutePath()));
+            outFile.exists();
         }
 
         log.info("Тип операции: " + criteriaType);

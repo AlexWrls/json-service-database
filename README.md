@@ -25,13 +25,9 @@
 
 
    - Сборщик проекта [_**Maven**_](http://maven.apache.org "_**Maven**_");   
-
-
-   - Разбор аргументов командной осуществлен с использованием библиотеки [_**Apache Commons CLI 1.4**_](https://mvnrepository.com/artifact/commons-cli/commons-cli/1.4 "_**Apache Commons CLI 1.4**_");
-   
-   - Конвертация объектов JSON осуществляется с помощью библиотеки [_**Gson » 2.8.6**_](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.6 "_**Gson » 2.8.6**_");
-    
+         
  ---
+ 
 | Инструкция  | 
 | ------------ | 
  

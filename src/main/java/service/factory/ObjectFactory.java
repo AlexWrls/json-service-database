@@ -1,6 +1,7 @@
 package service.factory;
 
 import service.Argument;
+import service.converter.JsonConverterImpl;
 import service.exception.ExceptionJson;
 
 import java.io.BufferedReader;
@@ -18,12 +19,16 @@ import java.util.stream.Stream;
  *  2. Считывет файл application.properties и конфигурирует необходдимые объекты
  */
 public class ObjectFactory {
+
     private Map<String, String> propertiesMap;
+    private JsonConverter jsonConverter;
 
     public ObjectFactory() {
         String path = ClassLoader.getSystemClassLoader().getResource("application.properties").getPath();
         try (Stream<String> lines = new BufferedReader(new FileReader(path)).lines();) {
             propertiesMap = lines.map(line -> line.split("=")).collect(Collectors.toMap(arr -> arr[0], arr -> arr[1]));
+            this.jsonConverter = new JsonConverterImpl();
+            configure(jsonConverter);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new ExceptionJson("error", String.format("Ошибка чтения из application.properties (%s)", e.getMessage()));
@@ -35,10 +40,7 @@ public class ObjectFactory {
         ConverterFactory converterFactory = getConverterFactory(argument.getCriteriaType());
         Criteria criteria = converterFactory.getCriteria(argument.getInputFile());
         Map<Object, String> queryMap = converterFactory.getCreateQuery(criteria).createQueryMap();
-        JsonConverter jsonConverter = converterFactory.getJsonConverter();
-        configure(jsonConverter);
         jsonConverter.writeJson(argument.getOutFile(), queryMap);
-
     }
 
     private ConverterFactory getConverterFactory(String type) {

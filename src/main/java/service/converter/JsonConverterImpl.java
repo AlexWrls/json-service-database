@@ -32,35 +32,31 @@ import java.util.Stack;
 
 public class JsonConverterImpl implements JsonConverter {
 
-
-    @InjectProperty(value = "driver")
+    @InjectProperty
     private static String driver;
-    @InjectProperty(value = "url")
+    @InjectProperty
     private static String url;
-    @InjectProperty(value = "username")
+    @InjectProperty
     private static String username;
-    @InjectProperty(value = "password")
+    @InjectProperty
     private static String password;
-    Argument argument = Argument.getArguments();
 
     @Override
     public void writeJson(File path, Map<Object, String> queryMap) {
-
+        Argument argument = Argument.getArguments();
         try (Connection connection = DatabaseConnector.getDbConnection(driver, url, username, password);
              Statement statement = connection.createStatement();
              FileWriter writer = new FileWriter(path);) {
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.setPrettyPrinting().create();
             switch (argument.getCriteriaType()){
                 case "search":{
                     OutputSearch outputSearch = getOutputSearch(queryMap, statement);
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.setPrettyPrinting().create();
                     writer.write(gson.toJson(outputSearch));
                     break;
                 }
                 case "stat":{
                     OutputStat outputStat = getOutputStat(queryMap, statement);
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.setPrettyPrinting().create();
                     writer.write(gson.toJson(outputStat));
                     break;
                 }

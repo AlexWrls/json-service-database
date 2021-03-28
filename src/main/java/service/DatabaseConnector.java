@@ -12,10 +12,10 @@ import java.sql.SQLException;
 
 public class DatabaseConnector {
 
-    private static Connection connection = null;
+    private static Connection connection;
 
     public static Connection getDbConnection(String driver, String url, String username, String password) {
-        if (connection == null) {
+
             try {
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, username, password);
@@ -26,7 +26,7 @@ public class DatabaseConnector {
                 e.printStackTrace();
                 throw new ExceptionJson("error", "Ошибка подключения к БД; " + e.getMessage());
             }
-        }
+
         return connection;
     }
 }
